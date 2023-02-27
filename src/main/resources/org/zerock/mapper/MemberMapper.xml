@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.MemberMapper">
+
+	<!-- 회원가입 -->
+	<insert id="memberRegister">
+	
+		insert into tbl_member (userid, userpw, username, useremail, phone, auth)
+		values(#{userid}, #{userpw}, #{username}, #{useremail}, #{phone}, #{auth})
+	
+	</insert>
+
+	<!-- 로그인을 위한 조회 -->
+	<select id="memberLogin" resultType="org.zerock.domain.MemberVO">
+	
+		select userid, userpw, username, useremail, phone, regdate, enabled, auth
+		from tbl_member
+		where userid = #{userid} 
+		<!-- and userpw = #{userpw} -->
+	
+	</select>
+	
+	
+	<update id="memberUpdate">
+	
+		update tbl_member
+		set userpw = #{userpw},
+		username = #{username},
+		useremail = #{useremail},
+		phone = #{phone}
+		where userid = #{userid}
+		
+	</update>
+
+	<!-- 회원 탈퇴 -->
+	<!-- <delete id="memberDelete">
+	
+		delete from tbl_member where userid = #{userid}
+		
+	</delete> -->
+	<!-- 회원정보에서 가입여부 판단하기 위해 update 수정 -->
+	<update id="memberDelete">
+	
+		update tbl_member
+		set enabled = '0'
+		where userid = #{userid}
+		
+	</update>
+
+	<!-- 패스워드 체크 -->
+	<select id="userpwChk" resultType="int">
+		
+		select count(*) from tbl_member
+			where userid = #{userid}
+			and userpw = #{userpw}
+	
+	</select>
+	
+	<!-- 아이디 중복 체크 -->
+	<select id="useridChk" resultType="int">
+		select count(*) from tbl_member
+		where userid = #{userid}
+	</select>
+		
+	<!-- 회원 정보 리스트 보기 -->
+	<select id="memberList" resultType="org.zerock.domain.MemberVO">
+
+		select * from tbl_member
+		
+	</select>
+	
+	<!-- 아이디 찾기 -->
+	<select id="memberIDSearch" resultType="org.zerock.domain.MemberVO">
+		
+		<![CDATA[
+		    select * from tbl_member
+		    where username = #{username}
+		    and phone = #{phone}
+		]]>  
+		  
+	</select>
+	
+	<!-- 비밀번호 찾기 후 수정 -->
+	<select id="memberPwdCheck" resultType="int">
+		<![CDATA[
+		    select count(*) from tbl_member
+		    where username = #{username}
+		    and phone = #{phone}
+		    and userid = #{userid}
+		]]>    
+	</select>
+    
+	<update id="passwordUpdate" parameterType="org.zerock.domain.MemberVO" >
+	    UPDATE tbl_member 
+	    SET userpw = #{userpw}
+	    where username = #{username}
+	    and phone = #{phone}
+	    and userid = #{userid}
+	</update>
+	
+	
+	
+	
+	
+
+</mapper>
