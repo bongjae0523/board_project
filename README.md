@@ -19,4 +19,4 @@
 ## 설계
 ![image](https://user-images.githubusercontent.com/98721987/221454145-9ac3e017-4931-4ee1-96d0-78a31a26ba0d.png)
 
-### <a href="https://receptive-condition-9f3.notion.site/Spring-Framework-c9a4bf07e59040f98ba2ecc80986f048">노션 보기</a>
+### <a href="https://receptive-condition-9f3.notion.site/Spring-Framework-29909012516d4794909cfdf5014c6e68">노션 보기</a>
